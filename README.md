@@ -1,5 +1,9 @@
 # Fast Adversarial Training for Neural Networks
 
+Neural networks have been shown to be extremely vulnerable to adversarial attacks, often small inperceptible changes to an image or input which completely confuses the model. Luckily, we can defend against these attacks well by producing adversaries at train time, but generating adversaries for a specific set of model weights is extremely expensive, up to $k$ times longer than traditional backpropagation for an adversary of strength $k$. Our goal is to make research in understanding such *robust* networks actually feasible by speeding up training.
+
+![Adv-Example](figures/adv-example.png)
+
 This project is on parallelizing the training of robust neural networks by extending the C++ implementation of PyTorch. We significantly optimize the method popularized by Madry et al. (https://arxiv.org/pdf/1706.06083.pdf). **We achieve an efficient 25x speedup using 32 cores**, with higher speedups available with more computing resources! See our report (link here) for our full spiel why we did this and our crazy results!
 
 Note: Our method provides a speedup for any fixed vector-to-vector (where vector sizes are fixed) neural network - resnets, transformers, you name it!
@@ -14,13 +18,13 @@ Training robust models requires exposing the model to adversaries during trainin
   
 This computation is expensive because it requires performing backpropagation $k$ times, where $k$ is desired to be large since more PGD iterations corresponds to stronger adversaries, which translates to a more robust model. Since the adversary generation is dependent on the specific model weights, adversaries cannot be precomputed for a dataset. Instead, adversaries are computed immediately prior to being used to performing a weight update. Since adversary generation requires k backpropagation steps, and the weight update is also a backpropagation step, adversary generation takes approximately $k$ times as long as the weight update.
   
-As we stand today, training large scale machine learning models is already very expensive, and thus training *robust* machine learning models is nearly infeasible due to the k times slowdown. Thus, our goal is to make training robust neural networks more practical for researchers working in HPC environments. We propose and show significant performance improvements of a novel parallel approach to robust model training using MPI and OpenMP. As adversary generation is a very intensive task to add into ML model training, an effective parallel implementation could have major implications for a variety of real-world applications. We hope this research can eventually stem into a library for other researchers.
+As we stand today, training large scale machine learning models is already very expensive, and thus training *robust* machine learning models is nearly infeasible due to the $k$ times slowdown. Thus, our goal is to make training robust neural networks more practical for researchers working in HPC environments. We propose and show significant performance improvements of a novel parallel approach to robust model training using MPI and OpenMP. As adversary generation is a very intensive task to add into ML model training, an effective parallel implementation could have major implications for a variety of real-world applications. We hope this research can eventually stem into a library for other researchers.
   
 ## Approach
 
 We parallelize the weight updates and adversary generation across multiple processes. For a detailed description of our novel method, see our report.
 
-![25x Speedup](figures/mpi.png)
+![Approach](figures/mpi.png)
 
 ### For Devs: Running the Code on Harvard Clusters or AWS
 
