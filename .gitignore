@@ -1,0 +1,6 @@
+libtorch/
+old_libtorch/
+build/*
+
+libtorch-cxx11-abi*
+libtorch-shared*
