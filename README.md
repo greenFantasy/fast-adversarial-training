@@ -6,7 +6,7 @@ Note: Our method provides a speedup for any fixed vector-to-vector (where vector
 
 ![25x Speedup](figures/speedup_analysis.png)
 
-The red lines show our true speedup against the theoretical maximum speedup as we increase the number of cores and processes (maintaining 1 core per process), and show that we outperform PyTorch's intraop parallelism by more than 4x!
+The red lines show our true speedup (Sp) against the theoretical maximum speedup as we increase the number of cores and processes (maintaining 1 core per process), and show that we outperform PyTorch's intraop parallelism by more than 4x! Our efficiency is shown in blue.
 
 ## Motivation
 
