@@ -1,6 +1,8 @@
-# Fast Adversarial Training
+# Fast Adversarial Training for Neural Networks
 
 This project is on parallelizing the training of robust neural networks by extending the C++ implementation of PyTorch. We significantly optimize the method popularized by Madry et al. (https://arxiv.org/pdf/1706.06083.pdf). **We achieve an efficient 25x speedup using 32 cores**, with higher speedups available with more computing resources! See our report (link here) for our full spiel why we did this and our crazy results!
+
+Note: Our method provides a speedup for any fixed vector-to-vector (where vector sizes are fixed) neural network - resnets, transformers, you name it!
 
 ![25x Speedup](figures/speedup_analysis.png)
 
